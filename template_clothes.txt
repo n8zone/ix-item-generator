@@ -1,0 +1,52 @@
+ITEM.name = 
+ITEM.model = 
+ITEM.description = 
+ITEM.category = 
+ITEM.bodygroup #=
+ITEM.bodygroupValue #= 
+ITEM.width #= 
+ITEM.height #=
+
+if (CLIENT) then
+	function ITEM:PaintOver(item, w, h)
+		if (item:GetData("wearing", false)) then
+			surface.SetDrawColor(110, 255, 110, 100)
+			surface.DrawRect(w-28, h-28, 16, 16)
+		end
+	end
+end
+
+ITEM.functions.Wear = {
+	OnRun = function(itemTable)
+		local client = itemTable.player
+		local groups = client:GetCharacter():GetData("groups",nil)
+		if(groups[itemTable.bodygroup] != 0 and groups[itemTable.bodygroup] != nil) then client:Notify("You are already wearing a shirt!") return false end
+		groups[itemTable.bodygroup] = itemTable.bodygroupValue
+		client:SetBodygroup(itemTable.bodygroup, itemTable.bodygroupValue)
+		client:GetCharacter():SetData("groups", groups)
+		itemTable:SetData("wearing", true)
+
+		return false
+	end,
+	OnCanRun = function(itemTable)
+		return !itemTable:GetData("wearing", false)
+	end
+}
+
+
+ITEM.functions.Remove = {
+	OnRun = function(itemTable)
+		local client = itemTable.player
+		client:SetBodygroup(itemTable.bodygroup, 0)
+		local groups = client:GetCharacter():GetData("groups", nil)
+		groups[itemTable.bodygroup] = 0
+		client:GetCharacter():SetData("groups", groups)
+		itemTable:SetData("wearing", false)
+
+		return false
+	end,
+	OnCanRun = function(itemTable)
+		return itemTable:GetData("wearing", false)
+	end
+}
+
