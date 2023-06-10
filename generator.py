@@ -16,12 +16,12 @@ def stripToVariables(strings, pattern):
 
 def GetTemplate(t):
     try:
-        with open(f"{t}.txt", "r") as template_file:
+        with open(f"templates/{t}.txt", "r") as template_file:
             template = template_file.read()
             return template
     except:
         print("TEMPLATE FILE NOT FOUND")
-        print("PLEASE ADD TEMPLATE FILE TO SAME DIRECTORY AS GENERATOR.EXE")
+        print("PLEASE ADD TEMPLATE FILE TO 'templates' DIRECTORY")
         input("")
 
     
@@ -109,4 +109,7 @@ generateFields(st)
 
 button = tk.Button(window, text="Create", command=button_click)
 button.pack()
+window.focus_force()
+window.title("ixGenerator")
+window.iconbitmap("helixpurple.ico")
 window.mainloop()

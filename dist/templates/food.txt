@@ -1,0 +1,18 @@
+ITEM.name = 
+ITEM.model = 
+ITEM.description = 
+ITEM.category = 
+ITEM.hunger #= 
+ITEM.width #= 
+ITEM.height #=
+
+ITEM.functions.Eat = {
+	OnRun = function(itemTable)
+		local client = itemTable.player
+
+		client:SetHealth(math.min(client:Health() + ITEM.hunger, 100))
+
+		return true
+	end,
+}
+
