@@ -1,8 +1,7 @@
 import tkinter as tk
 import re
 
-window = tk.Tk()
-window.geometry("700x480")
+
 
 variable_fields = []
 numeric_fields = []
@@ -15,10 +14,16 @@ NUMERIC_VARIABLE_PATTERN = r"ITEM\.\w+\s*#="
 def stripToVariables(strings, pattern):
     return re.findall(pattern, strings)
 
-def GetTemplate():
-    with open("template_clothes.txt", "r") as template_file:
-        template = template_file.read()
-        return template
+def GetTemplate(t):
+    try:
+        with open(f"{t}.txt", "r") as template_file:
+            template = template_file.read()
+            return template
+    except:
+        print("TEMPLATE FILE NOT FOUND")
+        print("PLEASE ADD TEMPLATE FILE TO SAME DIRECTORY AS GENERATOR.EXE")
+        input("")
+
     
 
 def clean_fields():
@@ -58,12 +63,12 @@ def button_click():
 
 
 
-def generateFields():
+def generateFields(t):
     global content
     global variable_fields
     global raw_variables
     global numeric_variables
-    template = GetTemplate()
+    template = GetTemplate(t)
     content = template
     raw_variables = stripToVariables(template, VARIABLE_PATTERN)
     numeric_variables = stripToVariables(template, NUMERIC_VARIABLE_PATTERN)
@@ -93,10 +98,15 @@ def generateFields():
         entry.pack()
         numeric_fields.append(entry)
 
+st = input("Please input the name of the template file without the file extension\n")
 
-generateFields()
+
+
+
+window = tk.Tk()
+window.geometry("700x480")
+generateFields(st)
 
 button = tk.Button(window, text="Create", command=button_click)
 button.pack()
-
 window.mainloop()
