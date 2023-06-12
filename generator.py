@@ -41,18 +41,17 @@ def button_click():
     global ingredients
     global results
     global content
-    print("Button clicked!")
     i = 0
     for entry in variable_fields:
         content = content.replace(raw_variables[i], raw_variables[i] + " " + "'" + entry.get() + "'")
         i += 1
-    print(content)
+    
 
     i = 0
     for entry in numeric_fields:
         content = content.replace(numeric_variables[i], numeric_variables[i].replace("#","") + " " + entry.get())
         i += 1
-    print(content)
+
 
 
     with open(f"sh_{variable_fields[0].get().lower().replace(' ', '_')}.lua", "w") as new_file:
