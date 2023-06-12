@@ -1,0 +1,5 @@
+ITEM.name = 
+ITEM.model = 
+ITEM.description = 
+ITEM.category = 
+
